@@ -13,7 +13,12 @@ func main(){
 	//cards.saveToFile("deck")
 	//fmt.Println( cards.toString() )
 
-	// Read from file Deck
-	cards := newDeckFromFile("deck")
+	// Read from file Deck. If no file exist create one
+	//cards := newDeckFromFile("deck")
+	//cards.print()
+
+	// Create a deck and shuffle it
+	cards := newDeck()
+	cards.shuffle()
 	cards.print()
 }

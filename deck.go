@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"strings"
+	"time"
 )
 
 // Create a new type of 'deck'
@@ -61,14 +63,14 @@ func newDeckFromFile(fileName string) deck {
 	if err != nil {
 		// Option #1 - Log the error and create new deck from a call to newDeck(),
 		// save the deck and return it
-		log.Println(err)
-		d := newDeck()
-		fmt.Println("ftanei")
-		d.saveToFile(fileName)
-		return d
+		//log.Println(err)
+		//d := newDeck()
+		//fmt.Println("ftanei")
+		//d.saveToFile(fileName)
+		//return d
 
 		// Option #2 - Log the error and entirely quit the program
-		//log.Fatal(err) // Fatal include the os.Exit(1)
+		log.Fatal(err) // Fatal include the os.Exit(1)
 	}
 
 	return stringToDeck( string(bs) )
@@ -76,4 +78,18 @@ func newDeckFromFile(fileName string) deck {
 
 func stringToDeck( s string ) deck {
 	return deck( strings.Split( s, "," ) )
+}
+
+// Shuffles all the cards in a deck
+func (d deck) shuffle() {
+
+	// Create a random Generator
+	source := rand.NewSource( time.Now().UnixNano() )
+	r := rand.New(source)
+
+	// Shuffle the deck by the custom random Generator
+	for i := range d{
+		newPosition := r.Intn( len(d)-1 )
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
 }
